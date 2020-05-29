@@ -74,6 +74,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ft_project.wsgi.application'
 
+# Instructs django to use our defined model instead of the inbuilt one
+AUTH_USER_MODEL = 'profiles_api.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
