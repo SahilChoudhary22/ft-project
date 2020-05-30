@@ -1,6 +1,13 @@
 from django.contrib import admin
 from profiles_api import models
 
-# Register your models here.
-admin.site.register(models.UserProfile)
-admin.site.register(models.ActivityPeriod)
+# Registering both the models of the app
+class ActivityPeriodAdmin(admin.ModelAdmin):
+    list_display = ('user', 'start_time', 'end_time')
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'tz')
+
+
+admin.site.register(models.UserProfile, UserProfileAdmin)
+admin.site.register(models.ActivityPeriod, ActivityPeriodAdmin)

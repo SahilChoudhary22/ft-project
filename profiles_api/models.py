@@ -34,7 +34,6 @@ class UserProfileManager(BaseUserManager):
 # Implementing custom user model.
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     #TODO - Overriding the inbuilt id to match the pattern of given JSON
-    
     email = models.EmailField(max_length=255, unique=True) ## email field
     name = models.CharField(max_length=255) ## name field
     is_activate = models.BooleanField(default=True) ## is activated (used for acc deletion etc.)
