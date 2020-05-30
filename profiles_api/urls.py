@@ -5,10 +5,11 @@ from profiles_api import views
 # instantiate router
 router = DefaultRouter()
 # register profile in router
-router.register('profile', views.UserProfileViewSet)
+router.register('profile', views.UserProfileViewSet, basename="profile")
+router.register('user-activity', views.UserActivity)
 
 urlpatterns = [
     path('', include(router.urls)),
     # since UserActivity is an APIview, it's not routed and instead added to urlpatterns
-    path('user-activity/', views.UserActivity.as_view(), name='user-activity-list'),
+    #path('user-activity/', views.UserActivity.as_view(), name='user-activity-list'),
 ]

@@ -1,6 +1,7 @@
-from rest_framework import serializers
+from rest_framework import serializers, fields
 from profiles_api.models import UserProfile, ActivityPeriod
 from profiles_api.constants import DATE_FORMAT
+import json
 
 class GetActivityPeriods(serializers.ModelSerializer):
     """ Serializer that serializes the activity periods"""
@@ -12,26 +13,39 @@ class GetActivityPeriods(serializers.ModelSerializer):
         fields = ('start_time', 'end_time')
     
     def get_start_time(self, obj):
-        return obj.start_time.strftime(DATE_FORMAT)
+        #pro = obj.start_time.strftime(DATE_FORMAT)
+        return json.dumps(obj.start_time, indent=2, sort_keys=True, default=str)
     
     def get_end_time(self, obj):
-        return obj.end_time.strftime(DATE_FORMAT)
+        #con = obj.end_time.strftime(DATE_FORMAT)
+        return json.dumps(obj.end_time, indent=4, sort_keys=True, default=str)
 
 
 class GetUserActivitySerializer(serializers.ModelSerializer):
     real_name = serializers.SerializerMethodField()
     activity_periods = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = UserProfile
         fields = ('id', 'real_name', 'tz', 'activity_periods')
-    
+        extra_kwargs = { 
+            'tz': {
+                'read_only': True,
+            }
+        }
     def get_real_name(self, obj):
         return obj.name
     
     def get_activity_periods(self, obj):
         activities = ActivityPeriod.objects.filter(user=obj).all().order_by('start_time')
         return GetActivityPeriods(activities, many=True).data
+    
+    def create(self, validated_data):
+        print(validated_data)
+        user_data = validated_data.pop('activity_periods')
+        activity = ActivityPeriod.objects.create(**user_data)
+        user = UserProfile.objects.create(activity=activity, **validated_data)
+        return user
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
