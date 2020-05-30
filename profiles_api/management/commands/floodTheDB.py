@@ -10,6 +10,14 @@ from profiles_api.models import UserProfile, ActivityPeriod
 class Command(BaseCommand):
     help = "Save randomly generated values to the model fields."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--delete-existing',
+            action='store_true',
+            dest='delete_existing',
+            default=False,
+            help='Delete existing stock records before generating new ones',
+        )
     # def get_date(self):
     #     # Naively generating a random date
     #     day = random.randint(1, 28)
@@ -46,7 +54,11 @@ class Command(BaseCommand):
             records.append(record)            
             activities.append(actRecord)
             activities.append(actRecord2)
-        
+        if options["delete_existing"]:
+            UserProfile.objects.all().delete()
+            ActivityPeriod.objects.all().delete()
+            self.stdout.write(self.style.SUCCESS('Existing User Profiles and Activity records deleted.'))
         UserProfile.objects.bulk_create(records)
         ActivityPeriod.objects.bulk_create(activities)
         self.stdout.write(self.style.SUCCESS('User Profiles saved successfully.'))
+        self.stdout.write(self.style.SUCCESS('Random Activity record added.'))

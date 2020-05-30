@@ -1,21 +1,16 @@
-from django.shortcuts import render
+#from django.shortcuts import render
 from profiles_api import serializers
-from profiles_api import models
+#from profiles_api import models
 from profiles_api.models import UserProfile
-from rest_framework import viewsets, views
-from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import viewsets, filters
+#from rest_framework.response import Response
+#from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework import filters
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from profiles_api import permissions
-from profiles_api.utils import Utils
-from datetime import datetime
-from django.core.paginator import Paginator
-from profiles_api.serializers import GetUserActivitySerializer, GetUserSerializer, UserProfileSerializer
-from profiles_api.constants import PageSize, INPUT_DATE_FORMAT, INTERNAL_SERVER_ERROR, PAGE_NOT_FOUND, INVALID_PAGE_SIZE, INVALID_USER_ID, \
-    INVALID_PARAMETER, VALIDATION_ERROR
+#from datetime import datetime
+from profiles_api.serializers import GetUserActivitySerializer, UserProfileSerializer
 import json
 
 class UserProfileViewSet(viewsets.ModelViewSet):

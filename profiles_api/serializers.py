@@ -1,6 +1,5 @@
 from rest_framework import serializers, fields
 from profiles_api.models import UserProfile, ActivityPeriod
-from profiles_api.constants import DATE_FORMAT
 import json
 
 class GetActivityPeriods(serializers.ModelSerializer):
@@ -13,11 +12,10 @@ class GetActivityPeriods(serializers.ModelSerializer):
         fields = ('start_time', 'end_time')
     
     def get_start_time(self, obj):
-        #pro = obj.start_time.strftime(DATE_FORMAT)
-        return json.dumps(obj.start_time, indent=2, sort_keys=True, default=str)
+        stime = json.dumps(obj.start_time, indent=2, sort_keys=True, default=str)[1:20]
+        return stime
     
     def get_end_time(self, obj):
-        #con = obj.end_time.strftime(DATE_FORMAT)
         return json.dumps(obj.end_time, indent=4, sort_keys=True, default=str)
 
 
@@ -47,23 +45,23 @@ class GetUserActivitySerializer(serializers.ModelSerializer):
         user = UserProfile.objects.create(activity=activity, **validated_data)
         return user
 
-class CreateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = ('id', 'name', 'tz')
+# class CreateUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserProfile
+#         fields = ('id', 'name', 'tz')
 
 
-class CreateActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ActivityPeriod
-        fields = ('start_time', 'end_time', 'user')
+# class CreateActivitySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ActivityPeriod
+#         fields = ('start_time', 'end_time', 'user')
 
 
-class GetUserSerializer(serializers.ModelSerializer):
-    """Serializes a user profile object"""
-    class Meta:
-        model = UserProfile
-        fields = ('id', 'email', 'name', 'tz')
+# class GetUserSerializer(serializers.ModelSerializer):
+#     """Serializes a user profile object"""
+#     class Meta:
+#         model = UserProfile
+#         fields = ('id', 'email', 'name', 'tz')
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
