@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # guide the incoming request to go to urls.py of profiles_api app
     path('api/', include('profiles_api.urls')),
 ]

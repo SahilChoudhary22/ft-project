@@ -74,9 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ft_project.wsgi.application'
 
-# Instructs django to use our defined model instead of the inbuilt one
-AUTH_USER_MODEL = 'profiles_api.User'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -126,3 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Instructs django to use our defined model instead of the inbuilt one
+AUTH_USER_MODEL = 'profiles_api.UserProfile'
+
+REST_FRAMEWORK = {
+    'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M',],
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M',
+}
