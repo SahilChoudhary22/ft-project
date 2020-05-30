@@ -2,15 +2,16 @@ import datetime
 import random
 from faker import Faker
 from django.core.management.base import BaseCommand
-
+import uuid
 from profiles_api.models import UserProfile, ActivityPeriod
-
 
 
 class Command(BaseCommand):
     help = "Save randomly generated values to the model fields."
 
+    timezones = ['Asia/Kolkata', 'US/Texas', 'Australia', 'Russia', 'China', 'SEA', 'JPR']
     def add_arguments(self, parser):
+        """ CLI commands for amazing UX"""
         parser.add_argument(
             '--delete-existing',
             action='store_true',
@@ -18,23 +19,18 @@ class Command(BaseCommand):
             default=False,
             help='Delete existing stock records before generating new ones',
         )
-    # def get_date(self):
-    #     # Naively generating a random date
-    #     day = random.randint(1, 28)
-    #     month = random.randint(1, 12)
-    #     year = random.randint(2014, 2017)
-    #     return datetime.date(year, month, day)
 
     def handle(self, *args, **options):
+        """function that populates the database"""
         fake = Faker()
         records = []
         activities = []
         for _ in range(20):
             kwargs = {
-                'id': fake.random_int(),
+                'id': random.randint(1, 99999),
                 'name': fake.name(),
                 'email': fake.email(),
-                'tz': fake.word()
+                'tz': fake.word(ext_word_list=timezones)
             }
             name_to_fill = kwargs['id']
             for _ in range(3):
@@ -48,12 +44,23 @@ class Command(BaseCommand):
                     'start_time': fake.date_time_this_decade(),
                     'end_time': fake.date_time_this_decade()
                 }
+                kwargsact3 = {
+                    'user': UserProfile(name_to_fill),
+                    'start_time': fake.date_time_this_decade(),
+                    'end_time': fake.date_time_this_decade()
+                }
+            
             record = UserProfile(**kwargs)
             actRecord = ActivityPeriod(**kwargsact)
-            actRecord2 = ActivityPeriod(**kwargsact)
+            actRecord2 = ActivityPeriod(**kwargsact2)
+            actRecord3 = ActivityPeriod(**kwargsact3)
+
+
             records.append(record)            
             activities.append(actRecord)
             activities.append(actRecord2)
+            activities.append(actRecord3)
+        
         if options["delete_existing"]:
             UserProfile.objects.all().delete()
             ActivityPeriod.objects.all().delete()

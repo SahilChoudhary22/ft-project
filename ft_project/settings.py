@@ -28,8 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,6 +125,7 @@ STATIC_URL = '/static/'
 # Instructs django to use our defined model instead of the inbuilt one
 AUTH_USER_MODEL = 'profiles_api.UserProfile'
 
+# Predefining date and input formats
 REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M',],
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M',

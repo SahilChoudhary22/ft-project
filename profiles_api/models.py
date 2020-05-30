@@ -33,36 +33,27 @@ class UserProfileManager(BaseUserManager):
 
 # Implementing custom user model.
 class UserProfile(AbstractBaseUser, PermissionsMixin):
-    #TODO - Overriding the inbuilt id to match the pattern of given JSON
+    """Inheriting AbstractBaseUser to restate our minimum requirements"""
     email = models.EmailField(max_length=255, unique=True) ## email field
     name = models.CharField(max_length=255) ## name field
-    is_activate = models.BooleanField(default=True) ## is activated (used for acc deletion etc.)
+    is_activate = models.BooleanField(default=True) # is activated (used for acc deletion etc.)
     is_staff = models.BooleanField(default=False) # if the user is admin, give access to special locations
-    # todo - use timezone field
-    tz = models.CharField(max_length=50)
+    tz = models.CharField(max_length=50) # kept it as CharField to supply dummy data easily in the given time limit
 
-    objects = UserProfileManager() # we'll create a manager for django CLI ease
+    objects = UserProfileManager() # created a manager for django CLI
 
     USERNAME_FIELD = 'email' ## Overriding the django username auth with email auth
-    REQUIRED_FIELDS = ['name'] ## username is automatically mandatory, this makes name mandatory too
+    REQUIRED_FIELDS = ['name'] ## make name mandatory
 
     # dunder method to customize model representation in the admin panel
     def __str__(self):
         return self.name
 
-# Activity Period model to track user activity
+
 class ActivityPeriod(models.Model):
+    """Activity Period model to track user's activity"""
     #receiving user object
     user = models.ForeignKey(UserProfile, related_name = "members" ,on_delete=models.CASCADE)
     # start_time and end_time
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-
-    # synchronizing IDs of both the models
-    
-
-
-
-## TODO - fix timezone
-## Make API
-## Create script to populate the DB
