@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'j2@_9@i0ph$u1n2sxz9=en82_4-u+w)qs3j5c!fy&(-r)0c*6l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -50,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # whitenoise for simplified static file serving
+    # not needed for this project at this stage but making code production ready
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ft_project.urls'
@@ -120,7 +125,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Instructs django to use our defined model instead of the inbuilt one
 AUTH_USER_MODEL = 'profiles_api.UserProfile'
@@ -130,3 +143,7 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M',],
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M',
 }
+
+# Activate Django-Heroku.
+# Hides sensitive information by making a local settings file
+django_heroku.settings(locals())
