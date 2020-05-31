@@ -1,1 +1,1 @@
-web: gunicorn ft_project.wsgi --log-file
+web: gunicorn --pythonpath ft_project.wsgi
