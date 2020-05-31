@@ -10,4 +10,6 @@ router.register('user-activity', views.UserActivity)
 
 urlpatterns = [
     path('', include(router.urls)),
+    # path to login user and further allow them to modify their profile
+    path('login/', views.UserLoginApiView.as_view()),
 ]

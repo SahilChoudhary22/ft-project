@@ -11,3 +11,6 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(models.UserProfile, UserProfileAdmin)
 admin.site.register(models.ActivityPeriod, ActivityPeriodAdmin)
+
+# Modify Admin Panel Header
+admin.site.site_header = "FT Labs Admin Panel"

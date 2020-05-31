@@ -23,7 +23,7 @@ class UserLoginApiView(ObtainAuthToken):
     """Handle creating user authentication token"""
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES # enable token in browsable api
 
-class UserActivity(viewsets.ModelViewSet):
+class UserActivity(viewsets.ReadOnlyModelViewSet):
     """Handles the user activity"""
     queryset = UserProfile.objects.all()
     serializer_class = GetUserActivitySerializer
