@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath ft_project.wsgi
+web: gunicorn --pythonpath ft_project wsgi
