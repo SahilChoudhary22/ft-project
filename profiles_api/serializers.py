@@ -19,11 +19,6 @@ class GetUserActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('id', 'name', 'tz', 'activity_periods')
-        extra_kwargs = {
-            'name': {
-                'validators': [UnicodeUsernameValidator()],
-            },
-        }
         depth = 1
 
 
@@ -49,5 +44,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
             name = validated_data['name'],
             password=validated_data['password']
         )
-
+        
         return user

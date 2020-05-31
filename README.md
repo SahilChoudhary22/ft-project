@@ -1,3 +1,4 @@
+
 # FT-Test
 An API built with Django framework to return user activities in JSON form.
 ------------
@@ -15,14 +16,18 @@ An API built with Django framework to return user activities in JSON form.
   - Possesses Custom Management Command to fill in dummy data
   - Abiding with PEP8 and strictly abiding with DRY principle
  
+
 ------------
 ## Table of Contents
-1) Getting Started
-2) Usage
-3) RESTful Structure
-4) Screenshots
-5) Deployment - VPS and PaaS
-6) Modules and packages Used
+1) [Getting Started](#getting-started)
+2) [Usage](#usage)
+3) [RESTful Structure](#restful-structure)
+4) [Custom Management Command](#custom-management-command)
+5) [Screenshots](#screenshots)
+6) [Deployment - VPS and PaaS](#deployment-vps-and-paas)
+7) [Modules and packages Used](#modules-and-packages-used)
+8) [Repository Map](#repository-map)
+9) [Repository Guide](#respository-guide)
 
 # Getting Started
 
@@ -60,7 +65,8 @@ http://127.0.0.1:8000/api
 - Navigate to any of the endpoints through here or directly reach to an endpoint through the links below
 
 > List of User Profiles - http://snusc.pythonanywhere.com/api/profile/ or https://ft-api-00.herokuapp.com/api/profile/
-List of User Activities - http://snusc.pythonanywhere.com/api/user-activity/ or https://ft-api-00.herokuapp.com/api/user-activity/
+
+> List of User Activities - http://snusc.pythonanywhere.com/api/user-activity/ or https://ft-api-00.herokuapp.com/api/user-activity/
 
 - Connect your frontend to any of these endpoints to carry out your operations. The possible responses are tabularized below.
 
@@ -74,6 +80,16 @@ List of User Activities - http://snusc.pythonanywhere.com/api/user-activity/ or 
 | http://127.0.0.1:8000/api/profile/  | GET       |   READ |     Get all users list| 
 | http://127.0.0.1:8000/api/profile/:id  | POST       |   UPDATE |     Update logged in user's info| 
 | http://127.0.0.1:8000/api/profile/:id  | GET       |   READ |     Get a particular user info| 
+
+## Custom Management Command
+- The project possesses a custom management command to populate the database with dummy data
+- Run the command using the following code
+`python manage.py floodTheDB`
+- The command also supports an optional argument  `--delete-existing` to delete the existing data before populating it
+`python manage.py floodTheDB --delete-existing`
+
+>NOTE - The flooder might give Runtime warning but that problem won't interfere with the project at current stage.
+
 
 ## Screenshots
 ##### User Activities endpoint
@@ -128,5 +144,47 @@ whitenoise==5.1.0
 ```
 Out of these, whitenoise, gunicorn and dj-database-url are for deployment. You won't need them if you're testing the app on local server.
 
-------------
+## Repository Map 
+```sh
+https://github.com/SahilChoudhary22/ft-project
+|   .gitignore  
+|   manage.py
+|   Procfile
+|   README.md
+|   requirements.txt
+|   runtime.txt
+|   
++---ft_project
+|   |   asgi.py
+|   |   settings.py
+|   |   urls.py
+|   |   wsgi.py
+|   |   __init__.py
+|   |   
+|   +---staticfiles
+|
+|           
+\---profiles_api
+    |   admin.py
+    |   apps.py
+    |   models.py
+    |   permissions.py
+    |   serializers.py
+    |   tests.py
+    |   urls.py
+    |   views.py
+    |   __init__.py
+    |   
+    +---management
+        \---commands
+                floodTheDB.py
+                __init__.py
+```
 
+## Repository Guide
+| File/folder name  | What is this? |
+| :------- |:-------:|
+| ft_project | django project name |
+| profiles_api | django application name |
+| Procfile | Used by heroku |
+|runtime.txt | contains python version |
