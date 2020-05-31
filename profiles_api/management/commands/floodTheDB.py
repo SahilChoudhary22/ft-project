@@ -9,7 +9,8 @@ from profiles_api.models import UserProfile, ActivityPeriod
 class Command(BaseCommand):
     help = "Save randomly generated values to the model fields."
 
-    timezones = ['Asia/Kolkata', 'US/Texas', 'Australia', 'Russia', 'China', 'SEA', 'JPR']
+    
+
     def add_arguments(self, parser):
         """ CLI commands for amazing UX"""
         parser.add_argument(
@@ -22,6 +23,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """function that populates the database"""
+        timezones = ['Asia/Kolkata', 'US/Texas', 'Australia', 'Russia', 'China', 'SEA', 'JPR']
         fake = Faker()
         records = []
         activities = []
