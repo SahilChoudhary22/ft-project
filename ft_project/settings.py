@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-
+import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -141,6 +141,8 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M',],
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M',
 }
+
+DATABASES['default'] = dj_database_url.config()
 
 # Activate Django-Heroku.
 # Hides sensitive information by making a local settings file
